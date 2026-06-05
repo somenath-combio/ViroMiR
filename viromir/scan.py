@@ -564,13 +564,19 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Modes:
-  discovery   Permissive (score ≥ 0.50) — exploratory genome-wide scan
-  balanced    Default    (score ≥ 0.70) — standard analysis
-  strict      Stringent  (score ≥ 0.75) — publication-quality results
+  discovery   Permissive (score ≥ 0.50) — highest recall for exploratory scans
+  balanced    Default    (score ≥ 0.70) — practical trade-off between recall and precision
+  strict      Stringent  (score ≥ 0.75) — most stringent ranked output (lowest false-positive rate)
 
 Examples:
-  viromir-scan -i virus.fa --mode strict -o results.csv
-  viromir-scan -i virus.fa --mode discovery --show-all -o all_results.csv
+  # Scan against the bundled human miRNA library (default)
+  viromir-scan -i virus.fa --mode balanced -o results.csv
+
+  # Scan against a custom miRNA FASTA file
+  viromir-scan -i virus.fa --mirna-file custom_mirnas.fa --mode strict -o results.csv
+
+  # Bypass mode cutoffs to retain all ML-scored hits in the main CSV
+  viromir-scan -i virus.fa --mode discovery --show-all -o results.csv
         """,
     )
     parser.add_argument('--input', '-i', required=True,
@@ -578,20 +584,20 @@ Examples:
     parser.add_argument('--out', '-o', default='viromir_predictions.csv',
                         help='Output CSV path (default: viromir_predictions.csv)')
     parser.add_argument('--mirna', '-m', default=None,
-                        help='Single miRNA name to look up in bundled reference')
+                        help='Select exactly one miRNA by name from the bundled reference library (mutually exclusive with --mirna-file)')
     parser.add_argument('--mirna-file', '-mf', default=None,
-                        help='FASTA file with miRNA sequences to test')
+                        help='Custom FASTA file of miRNA sequences to test (mutually exclusive with --mirna)')
     parser.add_argument('--model', default=str(DEFAULT_MDL),
                         help=f'Path to ViroMiR model pickle (default bundled model)')
     parser.add_argument('--mode', choices=['discovery', 'balanced', 'strict'],
                         default='balanced',
                         help='Filtering stringency (default: balanced)')
     parser.add_argument('--show-all', action='store_true',
-                        help='Bypass mode filter; write every scored prediction to main CSV')
+                        help='Bypass the mode cutoff for the main CSV; writes all clustered predictions regardless of score')
     parser.add_argument('--threads', '-t', type=int, default=4,
                         help=f'Number of parallel IntaRNA workers (default: 4, max: {MAX_THREADS})')
     parser.add_argument('--top-k', '-k', type=int, default=0,
-                        help='Keep only the top K predictions globally by score AFTER filtering (default: 0 = no limit)')
+                        help='Post-scoring ranking cap: keep only the top K predictions AFTER all filtering/clustering (default: 0 = no limit)')
     parser.add_argument('--min-dg', type=float, default=-10.0,
                         help='Discard IntaRNA hits weaker than this energy threshold (default: -10.0)')
     parser.add_argument('--cluster-window', type=int, default=20,

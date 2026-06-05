@@ -11,10 +11,18 @@ ViroMiR combines thermodynamic scanning and machine learning to reduce false-pos
 Get up and running with ViroMiR in under a minute:
 
 **1. Install**
+We highly recommend creating a dedicated Conda environment to avoid conflicts with your system's Python/pip paths.
+
 ```bash
 git clone https://github.com/somenath-combio/ViroMiR.git
 cd ViroMiR
-conda install -c bioconda intarna   # Requires IntaRNA in PATH
+
+# Create and activate a clean environment
+conda create -n viromir_env python=3.10 -y
+conda activate viromir_env
+
+# Install IntaRNA and package dependencies
+conda install -c bioconda intarna -y
 pip install -e .
 ```
 
