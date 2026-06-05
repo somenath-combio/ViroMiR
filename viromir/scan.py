@@ -282,6 +282,12 @@ def scan_pair(mirna_id, mirna_seq, target_id, target_seq):
         feats['target_id'] = target_id
         feats['start']     = inta['tgt_start']
         feats['end']       = inta['tgt_end']
+        
+        # Extract CTS sequence using 1-indexed IntaRNA coordinates
+        ts = max(0, inta['tgt_start'] - 1)
+        te = inta['tgt_end']
+        feats['cts_sequence'] = target_seq[ts:te]
+        
         all_feats.append(feats)
     return all_feats
 
@@ -522,14 +528,14 @@ def _count_confidence(results):
 # ══════════════════════════════════════════════════════════════════
 
 OUTPUT_COLUMNS = [
-    'rank', 'mirna_id', 'target_id', 'start', 'end',
-    'delta_G', 'seed_score', 'supplementary_score', 'n_base_pairs',
+    'rank', 'mirna_id', 'target_id', 'start', 'end', 'cts_sequence',
+    'delta_G', 'n_base_pairs',
     'viromir_prob', 'viromir_score', 'confidence',
 ]
 
 FULL_OUTPUT_COLUMNS = [
-    'rank_full', 'mirna_id', 'target_id', 'start', 'end',
-    'delta_G', 'seed_score', 'supplementary_score', 'n_base_pairs',
+    'rank_full', 'mirna_id', 'target_id', 'start', 'end', 'cts_sequence',
+    'delta_G', 'n_base_pairs',
     'viromir_prob', 'viromir_score', 'confidence',
 ]
 
@@ -541,7 +547,7 @@ def write_results(results, out_path, columns=OUTPUT_COLUMNS):
         writer.writeheader()
         for r in results:
             row = dict(r)
-            for k in ['delta_G', 'seed_score', 'supplementary_score', 'viromir_prob', 'viromir_score']:
+            for k in ['delta_G', 'viromir_prob', 'viromir_score']:
                 if k in row and isinstance(row[k], float):
                     row[k] = round(row[k], 4)
             writer.writerow(row)
