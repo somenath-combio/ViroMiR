@@ -1,0 +1,11 @@
+name: viromir_env
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.8
+  - intarna=3.4.1
+  - pip
+  - pip:
+    - -e .

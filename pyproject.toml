@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "viromir"
+version = "1.0.0"
+description = "ViroMiR: Human miRNA to Viral mRNA Interaction Predictor"
+authors = [
+  { name = "Somenath", email = "somenath.bioinfo@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pandas>=1.3.0",
+    "numpy>=1.21.0",
+    "xgboost>=1.5.0",
+    "scikit-learn>=1.0.2"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/somenath/ViroMiR"
+"Bug Tracker" = "https://github.com/somenath/ViroMiR/issues"
+
+[project.scripts]
+viromir-scan = "viromir.scan:main"
+viromir-benchmark = "viromir.benchmark:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["viromir*"]
+
+[tool.setuptools.package-data]
+viromir = ["model/*.pkl", "data/*.fa", "data/*.csv"]

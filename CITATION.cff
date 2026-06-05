@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use ViroMiR in your research, please cite it as below."
+authors:
+  - family-names: "Somenath"
+    given-names: "Author"
+title: "ViroMiR: High-Precision Viral miRNA Interaction Discovery"
+version: 1.0.0
+date-released: 2026-06-05
+url: "https://github.com/somenath/ViroMiR"

@@ -1,0 +1,27 @@
+Summary: 
+In response to request by numerous users of the RNA22 server, we have implemented and now make available a utility that will allow you to submit multiple requests to the rna22 server using "one or more microRNAs of interest" and "one or more target sequences of interest" and without the need to issue each request manually!
+
+Requirements: 
+1. Java 1.6 or greater must be used (http://www.java.com/en/download/index.jsp to download if you don't currently have it installed).  
+	- issuing the command 'java -version' should tell you your current Java version
+	
+Instructions on how to run the remote version of RNA22v2:
+
+1.  Unzip/extract the included zip file into a folder
+2.  Open the extracted 'Parameters.properties' file and change desired parameters as needed
+	- the first two parameters are the locations of your input sequence files (it defaults to the examples included in the zip file)
+	- Note: your miR and Transcript input files must be in FASTA format.  Importantly:
+				- blank lines should be removed (or you'll get errors)
+				- each sequence must be in pairs
+				- the first line is the header and starts with a >, example ">MyTranscriptHeader"
+				- the second line is the sequence, example "ATCGATCGATCG"
+					- Note: sequences can now span multiple lines
+					- sequences are limited by the server to <=20,000nt
+				- there is no limit to the number of miR & Transcripts you can have in the input files
+3.  Run the RNA22v2 program by issuing the command 'java RNA22v2'
+	- You must run this command from the directory you extracted the files to in #1 (RNA22v2.class must be in your current working directory)
+	- Note: running the program will fetch results from the server in multiple transactions (1 transcript at a time, up to 50miR's at a time).  This is to allow sharing of our server resources with other people running the same tool.
+4.  The results of RNA22v2 will be stored in the file specified by the 'outputfile' parameter located within the Parameters.properties file
+
+Considerations:
+Please, be kind to your colleagues! Everyone who uses the RNA22 server would like to enjoy reasonable response times. You can help achieve this by submitting not more than a few tens of requests at a time.
