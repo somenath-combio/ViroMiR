@@ -94,25 +94,7 @@ Rows in the final output are sorted descending by `viromir_score`, with `delta_G
 
 *(Example Interpretation: A `viromir_score` of `0.88` with a `delta_G` of `-20.2` indicates a highly confident prediction with a very stable physical interaction)*
 
----
 
-## 📊 Benchmarking & Experimental Validation
-
-ViroMiR has been evaluated on complete viral genomes using the full human miRNA library. The recovery rates below reference validated experimental ground-truth interactions curated from external literature for our manuscript.
-
-### SARS-CoV-2 (NC_045512.2)
-- **Genome Size:** ~30 kb
-- **Raw IntaRNA Hits:** 12,775
-- **Balanced Mode Predictions (Score ≥ 0.70):** 4,929
-- **Manuscript Recovery:** Successfully recovered 15 / 16 (93.8%) known experimental targets in `strict` mode. 
-
-### HIV-1 (NC_001802.1)
-- **Genome Size:** ~9.7 kb
-- **Raw IntaRNA Hits:** 13,272
-- **Balanced Mode Predictions:** 4,040
-- **Manuscript Recovery:** Successfully recovered 13 / 13 (100%) known experimental targets.
-
----
 
 ## 📁 Repository Layout
 ```
